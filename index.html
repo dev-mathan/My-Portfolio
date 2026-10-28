@@ -104,7 +104,7 @@ nav ul a:hover,nav ul a.on{color:var(--tx);background:var(--card)}
 .ci{width:2.6rem;height:2.6rem;border-radius:10px;border:1px solid var(--line);display:grid;place-items:center;flex:none;color:var(--ac);background:var(--glow)}
 .ci svg{width:1.1rem;height:1.1rem;fill:currentColor}
 .cl small{display:block;color:var(--mu);font-size:.8rem}
-.cl a{text-decoration:none;font-weight:500;overflow-wrap:anywhere}.cl a:hover{color:var(--ac)}
+.cl a{text-decoration:none;font-weight:500;overflow-wrap:anywhere}.cl a:hover{color:var(--ac);text-decoration:underline}
 footer{border-top:1px solid var(--line);padding:1.6rem 0}
 footer .wrap{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;color:var(--mu);font-size:.9rem}
 .soc{display:flex;gap:.5rem}.soc a{display:grid;place-items:center;width:2.2rem;height:2.2rem;border-radius:9px;border:1px solid var(--line)}.soc a:hover{color:var(--ac);border-color:var(--ac)}.soc svg{width:1.05rem;height:1.05rem;fill:currentColor}
@@ -249,6 +249,11 @@ const ROAD=["Java","OOP","Collections","SQL","Spring","Spring Boot","REST API","
 
 const $=(s,r=document)=>r.querySelector(s),h=(t,c,x)=>{const e=document.createElement(t);if(c)e.className=c;if(x!=null)e.innerHTML=x;return e};
 document.querySelectorAll("[data-link]").forEach(a=>{const k=a.dataset.link;a.href=k==="email"?"mailto:"+ME.email:ME[k];if(k==="email"&&!a.textContent.trim()&&!a.querySelector("svg"))a.textContent=ME.email});
+/* email links: open Gmail compose in a new tab on desktop (works without a mail app); phones use the normal mailto */
+document.querySelectorAll('a[data-link="email"]').forEach(a=>a.addEventListener("click",e=>{
+ if(/Android|iPhone|iPad|iPod/i.test(navigator.userAgent))return;
+ e.preventDefault();
+ window.open("https://mail.google.com/mail/?view=cm&fs=1&to="+encodeURIComponent(ME.email)+"&su="+encodeURIComponent("Hello Mathan"),"_blank","noopener")}));
 const sg=$("#skillgrid");
 for(const[g,l]of Object.entries(SKILLS)){const c=h("div","card sk",`<h3>${g}</h3>`),w=h("div","chips");l.forEach(s=>{const[n,t]=s.split("|");w.append(h("span","chip"+(t?" l":""),n+(t?" (learning)":"")))});c.append(w);sg.append(c)}
 const pg=$("#projgrid");
